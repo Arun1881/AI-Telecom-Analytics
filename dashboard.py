@@ -102,7 +102,15 @@ if temp_df["Signal_Strength"].dtype == object:
 else:
     temp_df["Signal_Score"] = temp_df["Signal_Strength"]
 
+temp_df["Signal_Score"] = pd.to_numeric(
+    temp_df["Signal_Score"],
+    errors="coerce"
+)
+
 avg_signal = temp_df["Signal_Score"].mean()
+
+if pd.isna(avg_signal):
+    avg_signal = 0
 avg_complaints = temp_df["Complaint_Count"].mean()
 
 health_score = max(
